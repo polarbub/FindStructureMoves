@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "findstructuremoves",
+  "version": "${version}",
+
+  "name": "findStructureMoves",
+  "description": "find moving strutures for polar to fix",
+  "authors": [
+    "polarbub"
+  ],
+  "contact": {
+    "homepage": "https://polarbub.net/",
+    "sources": ""
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/findstructuremoves/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.polarbub.findStructureMoves.FindStructureMoves"
+    ]
+  },
+  "mixins": [
+    "findstructuremoves.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.12",
+    "fabric-api": "*",
+    "minecraft": "~1.19.3",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

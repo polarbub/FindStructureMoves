@@ -1,0 +1,41 @@
+# gradle
+
+.gradle/
+gradle/
+gradlew
+gradlew.bat
+build/
+out/
+classes/
+
+# eclipse
+
+*.launch
+
+# idea
+
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# vscode
+
+.settings/
+.vscode/
+bin/
+.classpath
+.project
+
+# macos
+
+*.DS_Store
+
+# fabric
+
+run/fabric-server-launcher.properties
+run/
+
+edit.txt
+resetServer.sh
+resetSingleplayer.sh

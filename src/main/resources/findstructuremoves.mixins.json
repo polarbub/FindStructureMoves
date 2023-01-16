@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.polarbub.findStructureMoves.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "StructureStartInvoker"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
