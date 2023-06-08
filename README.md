@@ -1,5 +1,8 @@
 # FindStructureMoves
-This is a mod for developing the Protosky mod. The Protosky mod skips a step of world generation where some structures are moved to their final locations. This detects which structures do that so they can be moved down without placing the blocks.
+This is a mod for developing the Protosky mod. The Protosky mod skips a step of world generation where some structures 
+are moved to their final locations. This detects which structures do that, so they can be moved down without placing the blocks. 
+This mod doesn't work at the same time as the Protosky mod as this mod hooks into structure generation which the Protosky mod
+skips.
 
 ### Usage
 This mod add two commands
@@ -13,9 +16,9 @@ This teleports the specified player either to all known structures or just the s
 This stops `/detectStructureMoves <player> all` before it has gone through all structures.
 
 ### I would forget otherwise
-Patch releases: 1.0 or 1.0.x or ~1.0.4
-Minor releases: 1 or 1.x or ^1.0.4
-Major releases: * or x
+Patch releases: 1.0 or 1.0.x or ~1.0.4  
+Minor releases: 1 or 1.x or ^1.0.4  
+Major releases: * or x  
 
 ### Licence
 

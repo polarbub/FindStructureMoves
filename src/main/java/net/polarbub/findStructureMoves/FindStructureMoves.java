@@ -168,15 +168,18 @@ public class FindStructureMoves implements ModInitializer {
                 List<Pair<BlockBox, BlockBox>> boxLocs = structureBoundingBoxLocations[ii];
                 if(boxLocs == null) continue;
 
+                stringBuilder.append(globalStructureRegistry.getId(structure).toString());
+                stringBuilder.append(" at ");
+                stringBuilder.append(boxLocs.get(0).getLeft().getMinX() + ", " + boxLocs.get(0).getLeft().getMinY() + " ");
+
                 if(boxLocs.size() == 1) {
                     Pair<BlockBox, BlockBox> boxes = boxLocs.get(0);
                     if(!(boxes.getLeft() == null || boxes.getRight() == null)) {
-                        stringBuilder.append(globalStructureRegistry.getId(structure).toString());
                         stringBuilder.append(blockBoxMoved(boxLocs.get(0).getLeft(), boxLocs.get(0).getRight()) ? " moved by " + calculateBlockBoxDelta(boxes.getLeft(), boxes.getRight()) : " didn't move").append("\n");
                     }
                 } else {
                     int iii = 0;
-                    stringBuilder.append(globalStructureRegistry.getId(structure).toString());
+
                     stringBuilder.append("\n");
                     for(Pair<BlockBox, BlockBox> boxes : boxLocs) {
                         iii++;
