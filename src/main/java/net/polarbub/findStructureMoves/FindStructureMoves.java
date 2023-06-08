@@ -60,7 +60,7 @@ public class FindStructureMoves implements ModInitializer {
 
                 structureToFind = structuresList.get(i);
 
-                globalContext.getSource().sendFeedback(Text.literal(i+1 + "/" + (structuresList.size()+1) + " Searching for " + globalStructureRegistry.getId(structureToFind)), true);
+                globalContext.getSource().sendFeedback(() -> Text.literal(i+1 + "/" + (structuresList.size()+1) + " Searching for " + globalStructureRegistry.getId(structureToFind)), true);
                 //System.out.println("Searching for " + structureToFind.toString());
 
                 try {
@@ -83,7 +83,7 @@ public class FindStructureMoves implements ModInitializer {
                 .then(argument("player", EntityArgumentType.player())
                         .then(literal("all").executes(context -> {
                             if(searching) {
-                                context.getSource().sendFeedback(Text.literal("Already searching"), true);
+                                context.getSource().sendFeedback(() -> Text.literal("Already searching"), true);
                                 //System.out.println("Already searching");
                                 return 1;
                             }
@@ -115,7 +115,7 @@ public class FindStructureMoves implements ModInitializer {
                         .then(literal("structure").then(
                                 argument("structure", RegistryPredicateArgumentType.registryPredicate(RegistryKeys.STRUCTURE)).executes(context -> {
                                             if(searching) {
-                                                context.getSource().sendFeedback(Text.literal("Already searching"), true);
+                                                context.getSource().sendFeedback(() -> Text.literal("Already searching"), true);
                                                 //System.out.println("Already searching");
                                                 return 1;
                                             }
@@ -132,7 +132,7 @@ public class FindStructureMoves implements ModInitializer {
                                             structureToFind = structuresList.get(0);
                                             globalPlayer = EntityArgumentType.getPlayer(context, "player");
 
-                                            context.getSource().sendFeedback(Text.literal("Starting search"), true);
+                                            context.getSource().sendFeedback(() -> Text.literal("Starting search"), true);
                                             //System.out.println("Starting search");
 
                                             try {
@@ -191,7 +191,7 @@ public class FindStructureMoves implements ModInitializer {
                 }
                 ii++;
             }
-            globalContext.getSource().sendFeedback(Text.literal(stringBuilder.toString()), true);
+            globalContext.getSource().sendFeedback(() -> Text.literal(stringBuilder.toString()), true);
             //System.out.println(stringBuilder.toString());
 
             searching = false;

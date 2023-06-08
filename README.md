@@ -12,6 +12,11 @@ This teleports the specified player either to all known structures or just the s
 
 This stops `/detectStructureMoves <player> all` before it has gone through all structures.
 
+### I would forget otherwise
+Patch releases: 1.0 or 1.0.x or ~1.0.4
+Minor releases: 1 or 1.x or ^1.0.4
+Major releases: * or x
+
 ### Licence
 
 Copyright (C) 2023  polarbub
