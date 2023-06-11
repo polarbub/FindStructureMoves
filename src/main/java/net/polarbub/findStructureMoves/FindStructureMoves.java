@@ -182,7 +182,7 @@ public class FindStructureMoves implements ModInitializer {
 
                 stringBuilder.append(globalStructureRegistry.getId(structure).toString());
                 stringBuilder.append(" at ");
-                stringBuilder.append(boxLocs.get(0).getLeft().getMinX() + ", " + boxLocs.get(0).getLeft().getMinY());
+                stringBuilder.append(boxLocs.get(0).getLeft().getMinX() + ", " + boxLocs.get(0).getLeft().getMinZ());
 
                 if(boxLocs.size() == 1) {
                     Pair<BlockBox, BlockBox> boxes = boxLocs.get(0);

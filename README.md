@@ -2,7 +2,8 @@
 This is a mod for developing the Protosky mod. The Protosky mod skips a step of world generation where some structures 
 are moved to their final locations. This detects which structures do that, so they can be moved down without placing the blocks. 
 This mod doesn't work at the same time as the Protosky mod as this mod hooks into structure generation which the Protosky mod
-skips.
+skips. There is a bool in `StructureHelper.java` of the Protosky mod called enableMovementDetection which enables the detection
+of the movement of all structures.
 
 ### Usage
 This mod add two commands
