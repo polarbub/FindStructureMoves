@@ -114,36 +114,46 @@ public class FindStructureMoves implements ModInitializer {
                         }))
                         .then(literal("structure").then(
                                 argument("structure", RegistryPredicateArgumentType.registryPredicate(RegistryKeys.STRUCTURE)).executes(context -> {
-                                            if(searching) {
-                                                context.getSource().sendFeedback(() -> Text.literal("Already searching"), true);
-                                                //System.out.println("Already searching");
-                                                return 1;
-                                            }
-                                            i = 0;
-                                            searching = true;
-                                            globalContext = context;
-                                            globalWorld = globalContext.getSource().getWorld();
-                                            globalStructureRegistry = globalWorld.getRegistryManager().get(RegistryKeys.STRUCTURE);
+                                    if(searching) {
+                                        context.getSource().sendFeedback(() -> Text.literal("Already searching"), true);
+                                        //System.out.println("Already searching");
+                                        return 1;
+                                    }
+                                    i = 0;
+                                    searching = true;
+                                    globalContext = context;
+                                    globalWorld = globalContext.getSource().getWorld();
+                                    globalStructureRegistry = globalWorld.getRegistryManager().get(RegistryKeys.STRUCTURE);
 
-                                            structuresList = new ArrayList<>(Collections.singleton(globalStructureRegistry.get(RegistryPredicateArgumentType.getPredicate(context, "structure", RegistryKeys.STRUCTURE, STRUCTURE_INVALID_EXCEPTION).getKey().orThrow())));
+                                    try {
+                                        structuresList = new ArrayList<>(Collections.singleton(globalStructureRegistry.get(RegistryPredicateArgumentType.getPredicate(context, "structure", RegistryKeys.STRUCTURE, STRUCTURE_INVALID_EXCEPTION).getKey().orThrow())));
+                                    } catch (Throwable e) {
+                                        e.printStackTrace();
+                                        searching = false;
+                                        context.getSource().sendFeedback(() -> Text.literal("Invalid structure"), true);
+                                        return 1;
+                                    }
+                                    //structuresList = new ArrayList<>(Collections.singleton(globalStructureRegistry.get(RegistryPredicateArgumentType.getPredicate(context, "structure", RegistryKeys.STRUCTURE, STRUCTURE_INVALID_EXCEPTION).getKey().orThrow())));
 
-                                            structureBoundingBoxLocations = new ArrayList[structuresList.size()];
+                                    structureBoundingBoxLocations = new ArrayList[structuresList.size()];
 
-                                            structureToFind = structuresList.get(0);
-                                            globalPlayer = EntityArgumentType.getPlayer(context, "player");
+                                    structureToFind = structuresList.get(0);
+                                    globalPlayer = EntityArgumentType.getPlayer(context, "player");
 
-                                            context.getSource().sendFeedback(() -> Text.literal("Starting search"), true);
-                                            //System.out.println("Starting search");
+                                    context.getSource().sendFeedback(() -> Text.literal("Starting search"), true);
+                                    //System.out.println("Starting search");
 
-                                            try {
-                                                BlockPos placeToGo = locateStructure(globalWorld, structureToFind, globalStructureRegistry, globalPlayer);
-                                                globalPlayer.teleport(placeToGo.getX(), placeToGo.getY(), placeToGo.getZ());
-                                            } catch (NoSuchElementException e) {
-                                                tickToBeFoundStructure(new ArrayList<>(Collections.singleton(new Pair<>(null, null))));
-                                            }
-                                            return 1;
-                                        }
-                                )))
+                                    try {
+                                        BlockPos placeToGo = locateStructure(globalWorld, structureToFind, globalStructureRegistry, globalPlayer);
+                                        globalPlayer.teleport(placeToGo.getX(), placeToGo.getY(), placeToGo.getZ());
+                                    } catch (NoSuchElementException e) {
+                                        context.getSource().sendFeedback(() -> Text.literal("Failed to find structure"), true);
+                                        searching = false;
+                                        //tickToBeFoundStructure(new ArrayList<>(Collections.singleton(new Pair<>(null, null))));
+                                    }
+                                    return 1;
+                                })
+                        ))
                 )));
     }
 
@@ -157,7 +167,6 @@ public class FindStructureMoves implements ModInitializer {
 
     public static synchronized void tickToBeFoundStructure(ArrayList<Pair<BlockBox, BlockBox>> structPoses) {
         structureBoundingBoxLocations[i] = structPoses;
-
         i++;
 
         if((i == structuresList.size()) || !searching) {
@@ -166,11 +175,14 @@ public class FindStructureMoves implements ModInitializer {
 
             for(Structure structure : structuresList) {
                 List<Pair<BlockBox, BlockBox>> boxLocs = structureBoundingBoxLocations[ii];
+                ii++;
                 if(boxLocs == null) continue;
+                if(boxLocs.size() < 1) continue;
+                if(boxLocs.get(0).getLeft() == null || boxLocs.get(0).getRight() == null) continue;
 
                 stringBuilder.append(globalStructureRegistry.getId(structure).toString());
                 stringBuilder.append(" at ");
-                stringBuilder.append(boxLocs.get(0).getLeft().getMinX() + ", " + boxLocs.get(0).getLeft().getMinY() + " ");
+                stringBuilder.append(boxLocs.get(0).getLeft().getMinX() + ", " + boxLocs.get(0).getLeft().getMinY());
 
                 if(boxLocs.size() == 1) {
                     Pair<BlockBox, BlockBox> boxes = boxLocs.get(0);
@@ -192,7 +204,7 @@ public class FindStructureMoves implements ModInitializer {
                                 .append("\n");
                     }
                 }
-                ii++;
+
             }
             globalContext.getSource().sendFeedback(() -> Text.literal(stringBuilder.toString()), true);
             //System.out.println(stringBuilder.toString());
